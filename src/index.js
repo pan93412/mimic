@@ -31,7 +31,7 @@ bot.command('mimic', ctx => {
 
 bot.hears('草', ctx => {
   return Promise.all([
-    ctx.pinChatMessage(ctx.message.message_id).catch(err => ctx.reply(err.description)),
+    ctx.pinChatMessage(ctx.message.message_id, process.env.NO_NOTIFICATION).catch(err => ctx.reply(err.description)),
     mimic(ctx, ctx.from.id)
   ])
 })
