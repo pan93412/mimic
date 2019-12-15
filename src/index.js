@@ -46,4 +46,4 @@ bot.hears('草', ctx => {
   ])
 })
 
-bot.launch().catch(console.err)
+bot.launch().catch(console.error)
