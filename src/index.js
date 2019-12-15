@@ -1,5 +1,5 @@
 const Telegraf = require('telegraf')
-require('dotenv').config()
+const uuid = require('uuid/v4')()
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
@@ -46,4 +46,6 @@ bot.hears('草', ctx => {
   ])
 })
 
+bot.telegram.setWebhook(`${process.env.WEBHOOK_BASEURL}/${uuid}`)
+bot.startWebhook(`/${uuid}`, null, process.env.PORT || 8080)
 bot.launch().catch(console.err)
