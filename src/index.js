@@ -6,9 +6,19 @@ const bot = new Telegraf(process.env.BOT_TOKEN)
 function mimic (ctx, target) {
   return Promise.all([
     ctx.getChatMember(target).then(res => {
+      let description = ''
+      let title = ''
+      if (res.user.username) {
+        description = `@${res.user.username}`
+      }
+      if (res.user.last_name) {
+        title = `${res.user.first_name} ${res.user.last_name}`
+      } else {
+        title = res.user.first_name
+      }
       return Promise.all([
-        ctx.setChatTitle(`${res.user.first_name} ${res.user.last_name}`),
-        ctx.setChatDescription(`@${res.user.username}`).catch(() => { return this })
+        ctx.setChatTitle(title),
+        ctx.setChatDescription(description).catch(() => { return this })
       ])
     }),
     ctx.telegram.getUserProfilePhotos(target)
