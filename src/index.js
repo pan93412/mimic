@@ -48,4 +48,4 @@ bot.hears('草', ctx => {
 
 bot.telegram.setWebhook(`${process.env.WEBHOOK_BASEURL}/${uuid}`)
 bot.startWebhook(`/${uuid}`, null, process.env.PORT || 8080)
-bot.launch().catch(console.err)
+bot.launch().catch(console.error)
