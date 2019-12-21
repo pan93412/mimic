@@ -45,6 +45,10 @@ bot.hears('草', ctx => {
   ])
 })
 
-bot.telegram.setWebhook(`${process.env.WEBHOOK_BASEURL}/${process.env.WEBHOOK_PATH}`)
-bot.startWebhook(`/${process.env.WEBHOOK_PATH}`, null, process.env.PORT || 8080)
-bot.launch().catch(console.error)
+bot.launch({
+  webhook: {
+    domain: process.env.WEBHOOK_BASEURL,
+    hookPath: `/telegraf/${process.env.WEBHOOK_PATH}`,
+    port: process.env.PORT || 8080
+  }
+}).catch(console.error)
