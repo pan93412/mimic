@@ -48,5 +48,5 @@ function beMimic (str) {
   })
 }
 
-['草'].forEach(s => beMimic(s))
+['草', '噗'].forEach(s => beMimic(s))
 bot.launch().catch(console.error)
