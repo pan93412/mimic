@@ -39,11 +39,14 @@ bot.command('mimic', ctx => {
   return mimic(ctx, targetUserId)
 })
 
-bot.hears('草', ctx => {
-  return Promise.all([
-    ctx.pinChatMessage(ctx.message.message_id).catch(err => ctx.reply(err.description)),
-    mimic(ctx, ctx.from.id)
-  ])
-})
+function beMimic (str) {
+  bot.hears(str, ctx => {
+    return Promise.all([
+      ctx.pinChatMessage(ctx.message.message_id).catch(err => ctx.reply(err.description)),
+      mimic(ctx, ctx.from.id)
+    ])
+  })
+}
 
+['草'].forEach(s => beMimic(s))
 bot.launch().catch(console.error)
