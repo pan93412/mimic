@@ -10,7 +10,7 @@ function mimic (ctx, target) {
       let title = ''
       if (res.user.username) description = `@${res.user.username}`
       if (res.user.last_name) title = `${res.user.first_name} ${res.user.last_name}`
-        else title = res.user.first_name
+      else title = res.user.first_name
       return Promise.all([
         ctx.setChatTitle(title),
         ctx.setChatDescription(description).catch(() => this)
@@ -27,8 +27,9 @@ function mimic (ctx, target) {
 
 bot.command('mimic', ctx => {
   const targetUserId = ctx.message.text.split(' ', 2)[1]
-  if (!targetUserId || typeof parseInt(targetUserId, 10) !== 'number')
+  if (!targetUserId || typeof parseInt(targetUserId, 10) !== 'number') {
     return ctx.reply('Invalid argument!')
+  }
 
   return mimic(ctx, targetUserId)
 })
