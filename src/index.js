@@ -8,17 +8,12 @@ function mimic (ctx, target) {
     ctx.getChatMember(target).then(res => {
       let description = ''
       let title = ''
-      if (res.user.username) {
-        description = `@${res.user.username}`
-      }
-      if (res.user.last_name) {
-        title = `${res.user.first_name} ${res.user.last_name}`
-      } else {
-        title = res.user.first_name
-      }
+      if (res.user.username) description = `@${res.user.username}`
+      if (res.user.last_name) title = `${res.user.first_name} ${res.user.last_name}`
+        else title = res.user.first_name
       return Promise.all([
         ctx.setChatTitle(title),
-        ctx.setChatDescription(description).catch(() => { return this })
+        ctx.setChatDescription(description).catch(() => this)
       ])
     }),
     ctx.telegram.getUserProfilePhotos(target)
@@ -32,18 +27,15 @@ function mimic (ctx, target) {
 
 bot.command('mimic', ctx => {
   const targetUserId = ctx.message.text.split(' ', 2)[1]
-  if (!targetUserId || typeof parseInt(targetUserId, 10) !== 'number') {
+  if (!targetUserId || typeof parseInt(targetUserId, 10) !== 'number')
     return ctx.reply('Invalid argument!')
-  }
 
   return mimic(ctx, targetUserId)
 })
 
-bot.hears('草', ctx => {
-  return Promise.all([
-    ctx.pinChatMessage(ctx.message.message_id).catch(err => ctx.reply(err.description)),
-    mimic(ctx, ctx.from.id)
-  ])
-})
+bot.hears('草', ctx => Promise.all([
+  ctx.pinChatMessage(ctx.message.message_id).catch(err => ctx.reply(err.description)),
+  mimic(ctx, ctx.from.id)
+]))
 
 bot.launch().catch(console.error)
